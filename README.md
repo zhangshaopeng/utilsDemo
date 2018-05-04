@@ -3,7 +3,17 @@
     整理一些常用的工具类方便以后使用，将持续更新，欢迎 star，欢迎issues.
 可以将项目clone下来，将utilLibrary当做modlue引进项目中进行开发。
 或者在budle.gradle中添加一下：
-
+   
+1：将其添加到存储库末尾的根build.gradle中
+     
+     allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+2：添加依赖关系
+    
     dependencies {
 	        implementation 'com.github.zhangshaopeng:utilsDemo:v1.0'
 	}
