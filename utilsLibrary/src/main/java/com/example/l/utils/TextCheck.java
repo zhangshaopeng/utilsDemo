@@ -113,6 +113,7 @@ public class TextCheck {
         Pattern pattern = Pattern.compile(all);
         return pattern.matches(all, account);
     }
+
     /**
      * 昵称过滤 只能输入中英文、数字、
      *
@@ -168,4 +169,10 @@ public class TextCheck {
         return characterNum;
     }
 
+    public static boolean isEmpty(String str) {
+        if (str != null || !(str.equalsIgnoreCase(""))) {
+            return false;
+        }
+        return true;
+    }
 }
