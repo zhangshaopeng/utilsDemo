@@ -1,7 +1,12 @@
 # utilsDemo
 ## 常用的工具类
     整理一些常用的工具类方便以后使用，将持续更新，欢迎 star，欢迎issues.
-    可以将项目clone下来，将utilLibrary当做modlue引进项目中进行开发。
+    可以将项目clone下来，将utilLibrary当做modlue引进项目中进行开发。
+    或者在budle.gradle中添加一下：
+    
+    dependencies {
+	        implementation 'com.github.zhangshaopeng:utilsDemo:v1.0'
+	}
 ## 注意事项
 ### 1：权限问题
 目前已经添加的权限有以下几种,如果有使用到相关方权限方法，可自行在项目里添加。
