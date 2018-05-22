@@ -1,4 +1,4 @@
-package com.example.l.utils;
+package com.shao.utilslibrary.utils;
 import android.content.Context;
 import android.media.AudioManager;
 /**

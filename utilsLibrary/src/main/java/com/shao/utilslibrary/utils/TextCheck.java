@@ -1,4 +1,4 @@
-package com.example.l.utils;
+package com.shao.utilslibrary.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

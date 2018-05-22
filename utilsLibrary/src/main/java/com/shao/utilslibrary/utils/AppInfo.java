@@ -1,4 +1,4 @@
-package com.example.l.utils;
+package com.shao.utilslibrary.utils;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 
-import com.example.l.UtilManager;
+import com.shao.utilslibrary.UtilManager;
 
 import java.io.File;
 import java.util.ArrayList;

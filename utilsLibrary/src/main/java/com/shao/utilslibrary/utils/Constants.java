@@ -1,4 +1,4 @@
-package com.example.l.utils;
+package com.shao.utilslibrary.utils;
 
 /**
  * Description:全局常量类

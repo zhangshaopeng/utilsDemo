@@ -1,4 +1,4 @@
-package com.example.l.utils;
+package com.shao.utilslibrary.utils;
 
 import android.content.Context;
 import android.location.LocationManager;
@@ -6,7 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-import com.example.l.UtilManager;
+import com.shao.utilslibrary.UtilManager;
 
 /**
  * Description:网络监察工具类

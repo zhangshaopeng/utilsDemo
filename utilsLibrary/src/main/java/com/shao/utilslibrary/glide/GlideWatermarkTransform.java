@@ -1,4 +1,4 @@
-package com.example.l.glide;
+package com.shao.utilslibrary.glide;
 
 import android.content.Context;
 import android.graphics.Bitmap;

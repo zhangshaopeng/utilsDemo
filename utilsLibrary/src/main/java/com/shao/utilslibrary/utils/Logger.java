@@ -1,4 +1,4 @@
-package com.example.l.utils;
+package com.shao.utilslibrary.utils;
 
 import android.support.annotation.IntDef;
 import android.util.Log;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class Logger {
     private static boolean logEnabled = true;
-    private static String DEFAULT_TAG = "======";
+    private static String DEFAULT_TAG = "Logger";
 
     private static final int DEBUG = 1;
     private static final int ERROR = 2;
