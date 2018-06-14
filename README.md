@@ -36,5 +36,10 @@
                compile 'com.google.code.gson:gson:2.7'
                compile 'com.alibaba:fastjson:1.2.8'
                compile 'com.github.bumptech.glide:glide:3.7.0'
+### 3：初始化问题	      
+*在使用的时候一定注意在你的application的onCreat（）方法中调用以下方法初始化该lib
+
+            UtilManager.init(this);
+
 ### Other
 欢迎您的到来，如果您有更好的方法：希望您能提出您的宝贵意见，一起进步！
