@@ -35,4 +35,16 @@ public class MainLooper extends Handler {
             instance.post(runnable);
         }
     }
+
+    /**
+     * 判断当前线程是否是主线程
+     *
+     * @return
+     */
+    public static boolean isMainLooper() {
+        if (Looper.getMainLooper().getThread() == Thread.currentThread()) {
+            return true;
+        }
+        return false;
+    }
 }
