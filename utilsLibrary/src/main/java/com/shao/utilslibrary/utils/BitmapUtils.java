@@ -1,15 +1,19 @@
 package com.shao.utilslibrary.utils;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -20,10 +24,20 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.shao.utilslibrary.UtilManager;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+
+import static com.shao.utilslibrary.emoji.EmojiUtil.calculateInSampleSize;
 
 /**
  * Description:关于图片转换的一些工具类
@@ -207,8 +221,44 @@ public class BitmapUtils {
 
         return degrees;
     }
-
-
+    /**
+     * 得到本地或者网络上的bitmap url - 网络或者本地图片的绝对路径,比如:
+     * <p/>
+     * A.网络路径: url="http://blog.foreverlove.us/girl2.png" ;
+     * <p/>
+     * B.本地路径:url="file://mnt/sdcard/photo/image.png";
+     * <p/>
+     * C.支持的图片格式 ,png, jpg,bmp,gif等等
+     *
+     * @param url
+     * @return
+     */
+    public static Bitmap GetLocalOrNetBitmap(String url) {
+        Bitmap bitmap = null;
+        InputStream in = null;
+        BufferedOutputStream out = null;
+        try {
+            in = new BufferedInputStream(new URL(url).openStream(), 1024);
+            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            out = new BufferedOutputStream(dataStream, 1024);
+            copy(in, out);
+            out.flush();
+            byte[] data = dataStream.toByteArray();
+            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            data = null;
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private static void copy(InputStream in, OutputStream out) throws IOException {
+        byte[] b = new byte[1024];
+        int read;
+        while ((read = in.read(b)) != -1) {
+            out.write(b, 0, read);
+        }
+    }
     /**
      * 旋转图片
      *
@@ -320,5 +370,185 @@ public class BitmapUtils {
         }
         return false;
     }
+    /**
+     * bitmap转byteArr
+     *
+     * @param bitmap bitmap对象
+     * @param format 格式
+     * @return 字节数组
+     */
+    public static byte[] bitmap2Bytes(Bitmap bitmap, Bitmap.CompressFormat format) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(format, 100, baos);
+        return baos.toByteArray();
+    }
+    /**
+     * byteArr转bitmap
+     *
+     * @param bytes 字节数组
+     * @return bitmap对象
+     */
+    public static Bitmap bytes2Bitmap(byte[] bytes) {
+        if (bytes.length != 0) {
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        } else {
+            return null;
+        }
+    }
+    /**
+     * drawable转bitmap
+     *
+     * @param drawable drawable对象
+     * @return bitmap对象
+     */
+    public static Bitmap drawable2Bitmap(Drawable drawable) {
+        // 取 drawable 的长宽
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
 
+        // 取 drawable 的颜色格式
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+                : Bitmap.Config.RGB_565;
+        // 建立对应 bitmap
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        // 建立对应 bitmap 的画布
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        // 把 drawable 内容画到画布中
+        drawable.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * bitmap转drawable
+     *
+     * @param res    resources对象
+     * @param bitmap bitmap对象
+     * @return drawable对象
+     */
+    public static Drawable bitmap2Drawable(Resources res, Bitmap bitmap) {
+        return new BitmapDrawable(res, bitmap);
+    }
+
+    public static Drawable bitmap2Drawable(Bitmap bitmap) {
+        return new BitmapDrawable(bitmap);
+    }
+
+    /**
+     * drawable转byteArr
+     *
+     * @param drawable drawable对象
+     * @param format   格式
+     * @return 字节数组
+     */
+    public static byte[] drawable2Bytes(Drawable drawable, Bitmap.CompressFormat format) {
+        Bitmap bitmap = drawable2Bitmap(drawable);
+        return bitmap2Bytes(bitmap, format);
+    }
+
+    /**
+     * byteArr转drawable
+     *
+     * @param res   resources对象
+     * @param bytes 字节数组
+     * @return drawable对象
+     */
+    public static Drawable bytes2Drawable(Resources res, byte[] bytes) {
+        Bitmap bitmap = bytes2Bitmap(bytes);
+        Drawable drawable = bitmap2Drawable(res, bitmap);
+        return drawable;
+    }
+
+    public static Drawable bytes2Drawable(byte[] bytes) {
+        Bitmap bitmap = bytes2Bitmap(bytes);
+        Drawable drawable = bitmap2Drawable(bitmap);
+        return drawable;
+    }
+    /**
+     * 获取bitmap
+     *
+     * @param file 文件
+     * @return bitmap
+     */
+    public static Bitmap getBitmap(File file) throws IOException {
+        if (file == null) {
+            return null;
+        }
+        InputStream is = null;
+        try {
+            is = new BufferedInputStream(new FileInputStream(file));
+            return BitmapFactory.decodeStream(is);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            is.close();
+        }
+    }
+
+    /**
+     * 获取bitmap
+     *
+     * @param filePath 文件路径
+     * @return bitmap
+     */
+    public static Bitmap getBitmap(String filePath) {
+        if (TextUtils.isEmpty(filePath)) {
+            return null;
+        }
+        return BitmapFactory.decodeFile(filePath);
+    }
+    /**
+     * 获取bitmap
+     *
+     * @param resId     资源id
+     * @param maxWidth  最大宽度
+     * @param maxHeight 最大高度
+     * @return bitmap
+     */
+    public static Bitmap getBitmap(int resId, int maxWidth, int maxHeight) {
+        if (UtilManager.getContext() == null) {
+            return null;
+        }
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        InputStream is = UtilManager.getContext().getResources().openRawResource(resId);
+        BitmapFactory.decodeStream(is, null, options);
+        options.inSampleSize = calculateInSampleSize(options, maxWidth, maxHeight);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeStream(is, null, options);
+    }
+    /**
+     * 获取bitmap
+     *
+     * @param res 资源对象
+     * @param id  资源id
+     * @return bitmap
+     */
+    public static Bitmap getBitmap(Resources res, int id) {
+        if (res == null) {
+            return null;
+        }
+        return BitmapFactory.decodeResource(res, id);
+    }
+    /**
+     * 获取bitmap
+     *
+     * @param res       资源对象
+     * @param id        资源id
+     * @param maxWidth  最大宽度
+     * @param maxHeight 最大高度
+     * @return bitmap
+     */
+    public static Bitmap getBitmap(Resources res, int id, int maxWidth, int maxHeight) {
+        if (res == null) {
+            return null;
+        }
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res, id, options);
+        options.inSampleSize = calculateInSampleSize(options, maxWidth, maxHeight);
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeResource(res, id, options);
+    }
 }

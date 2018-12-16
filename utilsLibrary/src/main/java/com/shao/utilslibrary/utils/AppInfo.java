@@ -1,7 +1,10 @@
 package com.shao.utilslibrary.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -9,6 +12,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.ContactsContract;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 
@@ -72,6 +77,21 @@ public class AppInfo {
 
 
     /**
+     * 获取电话管理器 读取电话权限 <uses-permission
+     * android:name="android.permission.READ_PHONE_STATE" />
+     *
+     * @param context
+     * @return TelephonyManager对象
+     */
+    public static TelephonyManager getTelephonyManager(Context context) {
+
+        TelephonyManager tm = (TelephonyManager) context
+                .getSystemService(context.TELEPHONY_SERVICE);
+        // String simNO = tm.getSimSerialNumber();
+        return tm;
+    }
+
+    /**
      * 得到当前应用的应用名
      *
      * @return 失败时返回null
@@ -86,6 +106,16 @@ public class AppInfo {
         }
     }
 
+    /**
+     * 获取IMEI码
+     *
+     * @param context
+     * @return
+     */
+    public static String getImei(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
+    }
 
     /**
      * 获取当前应用的版本号
@@ -122,6 +152,23 @@ public class AppInfo {
         return permissionsList;
     }
 
+    /**
+     * 获取app版本信息
+     *
+     * @param context
+     * @return appVersion
+     */
+    public static PackageInfo getPackageInfo(Context context) {
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(),
+                    0);
+            return info;
+        } catch (PackageManager.NameNotFoundException e) {
+            ToastUtils.show("--->> 获取app版本信息失败");
+        }
+        return null;
+    }
 
     /**
      * 获取manifest里的meta-data 数据，可以用来获取渠道名称等
@@ -178,6 +225,7 @@ public class AppInfo {
         }
         return ret;
     }
+
     /**
      * 获取当前进程名
      */
@@ -193,6 +241,35 @@ public class AppInfo {
             }
         }
         return processName;
+    }
+
+    /**
+     * 判断App是否是系统应用
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isSystemApp() {
+        return isSystemApp(UtilManager.getContext().getPackageName());
+    }
+
+    /**
+     * 判断App是否是系统应用
+     * * @param packageName 包名
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isSystemApp(String packageName) {
+        if (TextUtils.isEmpty(packageName)) {
+            return false;
+        }
+        try {
+            PackageManager pm = UtilManager.getContext().getPackageManager();
+            ApplicationInfo ai = pm.getApplicationInfo(packageName, 0);
+            return ai != null && (ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
@@ -228,5 +305,58 @@ public class AppInfo {
         Uri packageURI = Uri.parse("package:" + packageName);
         intent.setData(packageURI);
         context.startActivity(intent);
+    }
+
+    // 保存添加的联系方式
+    public static void insertData(Context context, String name, String phone) {
+
+        ContentValues values = new ContentValues();
+
+        Uri rawContactUri = context.getContentResolver().insert(
+                ContactsContract.RawContacts.CONTENT_URI, values);
+        long rawContactId = ContentUris.parseId(rawContactUri);
+        // 往data表入姓名数据
+        values.clear();
+        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId);
+        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE);// 内容类型
+        values.put(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, name);
+        context.getContentResolver().insert(
+                ContactsContract.Data.CONTENT_URI, values);
+        // 往data表入电话数据
+        values.clear();
+        values.put(ContactsContract.Data.RAW_CONTACT_ID, rawContactId);
+        values.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+        values.put(ContactsContract.CommonDataKinds.Phone.NUMBER, phone);
+        values.put(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE);
+        context.getContentResolver().insert(
+                ContactsContract.Data.CONTENT_URI, values);
+    }
+    /**
+     * 判断App是否有root权限
+     *
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isAppRoot() {
+        ShellUtils.CommandResult result = ShellUtils.execCmd("echo root", true);
+        if (result.result == 0) {
+            return true;
+        }
+        if (result.errorMsg != null) {
+            Logger.d("isAppRoot", result.errorMsg);
+        }
+        return false;
+    }
+    /**
+     * 打开App
+     *
+     * @param activity    activity
+     * @param packageName 包名
+     * @param requestCode 请求值
+     */
+    public static void launchApp(Activity activity, String packageName, int requestCode) {
+        if (TextUtils.isEmpty(packageName)) {
+            return;
+        }
+        activity.startActivityForResult(IntentUtils.getLaunchAppIntent(activity, packageName), requestCode);
     }
 }

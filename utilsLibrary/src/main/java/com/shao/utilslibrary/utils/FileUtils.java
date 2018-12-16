@@ -1,7 +1,11 @@
 package com.shao.utilslibrary.utils;
 
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v4.content.FileProvider;
 
 import com.shao.utilslibrary.UtilManager;
 
@@ -180,5 +184,23 @@ public class FileUtils {
         }
         rootFile.delete();
     }
+
+    /**
+     * 将文件转换成uri(支持7.0)
+     *
+     * @param mContext
+     * @param file
+     * @return
+     */
+    public static Uri getUriForFile(Context mContext, File file) {
+        Uri fileUri = null;
+        if (Build.VERSION.SDK_INT >= 24) {
+            fileUri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileprovider", file);
+        } else {
+            fileUri = Uri.fromFile(file);
+        }
+        return fileUri;
+    }
+
 
 }
