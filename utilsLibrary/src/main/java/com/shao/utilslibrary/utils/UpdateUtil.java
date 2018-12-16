@@ -1,12 +1,14 @@
-package com.shao.utilslibraray.utils;
+package com.shao.utilslibrary.utils;
 
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -23,8 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import app.dyne.com.upgrade.R;
-import cn.droidlover.xdroid.util.CommonTools;
+
 
 /**
  * 检查更新
@@ -73,7 +74,7 @@ public class UpdateUtil {
                     break;
                 case DOWN_ERROR:
                     downloadDialog.dismiss();
-                    CommonTools.alert(mContext, "下载错误", CommonTools.type_alertWarn);
+                    ToastUtils.show("下载错误");
                     break;
                 default:
                     break;
@@ -96,7 +97,7 @@ public class UpdateUtil {
         if (!fileIsExists(saveFileName) || (fileIsExists(saveFileName) && !isUninatllApkInfo(saveFileName))) {
             apkUrl = url;
             if (TextUtils.isEmpty(apkUrl)) {
-                CommonTools.alert(mContext, "下载路径错误，请重试", CommonTools.type_alertWarn);
+                ToastUtils.show("下载路径错误，请重试");
                 return;
             }
             showNoticeDialog();
@@ -224,8 +225,8 @@ public class UpdateUtil {
         if (!apkfile.exists()) {
             return;
         }
-        Intent i = new Intent(Intent.ACTION_VIEW); 
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");  
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
         mContext.startActivity(i); 
     }
 
