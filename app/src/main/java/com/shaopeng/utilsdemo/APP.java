@@ -2,7 +2,7 @@ package com.shaopeng.utilsdemo;
 
 import android.app.Application;
 
-import com.shao.utilslibrary.UtilManager;
+import com.shao.app.UtilManager;
 
 /**
  * Description:

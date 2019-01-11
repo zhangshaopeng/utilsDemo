@@ -7,7 +7,7 @@
     tools:context="com.shaopeng.utilsdemo.MainActivity">
 
 
-    <com.shao.utilslibrary.emoji.EmojiGridView
+    <com.shao.app.emoji.EmojiGridView
         android:id="@+id/emojiGridView"
         android:layout_width="match_parent"
         android:layout_height="180dp"
