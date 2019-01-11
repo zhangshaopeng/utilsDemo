@@ -16,7 +16,7 @@ import java.util.Map;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class GsonUtils {
+public class GsonTool {
 
     private static Gson gson = new Gson();
 

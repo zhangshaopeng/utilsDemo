@@ -11,7 +11,7 @@ import java.util.Locale;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class DateUtils {
+public class DateTool {
     /**
      * @param millisecond 毫秒
      * @return 返回 yy/MM/dd HH:mm

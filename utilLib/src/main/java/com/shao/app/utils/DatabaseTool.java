@@ -13,7 +13,7 @@ import java.io.InputStream;
  * Email :1377785991@qq.com
  * Data:2018/5/4
  */
-public class DatabaseUtils {
+public class DatabaseTool {
     /**
      * 导入数据库.
      *

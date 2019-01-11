@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class PinYinUtils {
+public class PinYinTool {
     /**
      * 将字符串中的中文转化为拼音,其他字符不变
      *

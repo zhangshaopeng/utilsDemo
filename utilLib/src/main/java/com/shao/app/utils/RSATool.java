@@ -20,7 +20,7 @@ import javax.crypto.Cipher;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class RSAUtils {
+public class RSATool {
 
     /**
      * RSA算法中公钥和密钥共用的系数N。代表着一个BigInteger。

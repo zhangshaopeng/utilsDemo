@@ -17,7 +17,7 @@ import com.shao.app.glide.GlideRoundTransform;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class ImageUtils {
+public class ImageTool {
 
     /**
      * 加载资源图

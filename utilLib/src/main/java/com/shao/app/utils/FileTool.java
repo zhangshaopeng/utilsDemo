@@ -12,6 +12,9 @@ import com.shao.app.UtilManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Description:文件工具类
@@ -20,7 +23,38 @@ import java.io.FileOutputStream;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class FileUtils {
+public class FileTool {
+    private static final String FD_FLASH = "-ext";
+
+    /**
+     * derectory为想用存储的完整自定义路径如(/aa/bb/cc.apk)
+     * 此方法可以判断是存储在sdk下还是data/data/包名
+     *
+     * @param context
+     * @param derectory
+     * @return
+     */
+    public static String getFilePath(Context context, String derectory) {
+        if (derectory.startsWith("/")) {
+            derectory = derectory.substring(derectory.indexOf("/") + 1);
+        }
+        String path = "";
+        if (avaiableMedia(context)) {
+            if (isHasFlashMemory()) {
+                path = Environment.getExternalStorageDirectory().getPath()
+                        + FD_FLASH + "/" + derectory;
+            } else {
+                path = Environment.getExternalStorageDirectory().getPath()
+                        + "/" + derectory;
+            }
+        } else {
+            if (null != context) {
+                path = context.getCacheDir().getPath() + "/" + derectory;
+            }
+        }
+        return path;
+    }
+
     /**
      * 获取系统存储路径
      *
@@ -133,6 +167,73 @@ public class FileUtils {
         }
     }
 
+    // 创建文件并写入字节
+    public static boolean createFile(File file, byte[] buffer) {
+        if (null == file) {
+            return false;
+        }
+        if (createFile(file)) {
+            FileOutputStream fos;
+            try {
+                fos = new FileOutputStream(file);
+                fos.write(buffer);
+                fos.flush();
+                fos.close();
+                buffer = null;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // 创建文件
+    public static boolean createFile(File file) {
+        Logger.d("===createFile====" + file.getPath());
+        try {
+            if (file.exists()) {
+                return true;
+            } else {
+                if (file.getParentFile().isDirectory()) {
+                    file.getParentFile().mkdirs();
+                }
+                File parentFile = file.getParentFile();
+                if (!parentFile.exists()) {
+                    parentFile.mkdirs();
+                }
+                file.createNewFile();
+            }
+
+            if (!file.exists()) {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static File createTmpFile(Context context) {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            // 已挂载
+            File pic = Environment.getExternalStorageDirectory();
+            //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
+            String fileName = "multi_image_" + timeStamp + "";
+            File tmpFile = new File(pic, fileName + ".jpg");
+            return tmpFile;
+        } else {
+            File cacheDir = context.getCacheDir();
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
+            String fileName = "multi_image_" + timeStamp + "";
+            File tmpFile = new File(cacheDir, fileName + ".jpg");
+            return tmpFile;
+        }
+    }
+
     /**
      * 复制文件
      *
@@ -167,9 +268,9 @@ public class FileUtils {
      *
      * @param filePath 文件路径
      */
-    private static void deleteFile(String filePath) {
+    public static void deleteFile(String filePath) {
 
-        if (!FileUtils.fileIsExists(filePath)) {
+        if (!FileTool.fileIsExists(filePath)) {
             return;
         }
 
@@ -202,5 +303,47 @@ public class FileUtils {
         return fileUri;
     }
 
+    /**
+     * 判断位置可用空间
+     *
+     * @param path
+     * @return
+     */
+    public static long getAvaiableSize(String path) {
+        StatFs stat = new StatFs(path);
+        long blockSize = stat.getBlockSize();
+        long blockCount = stat.getBlockCount();
+        return blockCount * blockSize;
+    }
+
+    /**
+     * @return
+     */
+    public static boolean avaiableMedia(Context context) {
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            return true;
+        } else {
+            ToastTool.show("没有内存卡");
+            return false;
+        }
+    }
+
+    /**
+     * @return
+     */
+    private static boolean isHasFlashMemory() {
+        String path = Environment.getExternalStorageDirectory().getPath()
+                + FD_FLASH;
+        File file = new File(path);
+        if (file.exists()) {
+            if (getAvaiableSize(path) == 0) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

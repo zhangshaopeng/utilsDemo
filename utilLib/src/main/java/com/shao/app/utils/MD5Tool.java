@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class MD5Utils {
+public class MD5Tool {
     /**
      * 生成md5
      * @param str

@@ -60,7 +60,7 @@ public class ToastUtils2 {
         Toast toast = new Toast(context);
         toast.setDuration(Toast.LENGTH_SHORT);
         //设置toast弹出位置
-        toast.setGravity(17, 0, DensityUtils.dip2px(120.0F));
+        toast.setGravity(17, 0, DensityTool.dip2px(120.0F));
         toast.setView(view);
         toast.show();
 

@@ -20,7 +20,7 @@ import java.util.zip.ZipOutputStream;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class FileZipUtils {
+public class FileZipTool {
     private static final int BUFFER = 2048;// 缓存大小
 
     /**

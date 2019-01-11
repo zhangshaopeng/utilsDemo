@@ -16,7 +16,7 @@ import java.io.File;
  * Email :1377785991@qq.com
  * Data:2018/12/5
  */
-public class IntentUtils {
+public class IntentTool {
 
     /**
      * 获取安装App(支持7.0)的意图
@@ -32,7 +32,7 @@ public class IntentUtils {
             return null;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri contentUri = FileUtils.getUriForFile(context, apkfile);
+        Uri contentUri = FileTool.getUriForFile(context, apkfile);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);

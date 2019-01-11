@@ -10,7 +10,7 @@ import android.media.ThumbnailUtils;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class VideoUtils {
+public class VideoTool {
     /**
      * 获取视频的缩略图 先通过ThumbnailUtils来创建一个视频的缩略图，然后再利用ThumbnailUtils来生成指定大小的缩略图。
      * 如果想要的缩略图的宽和高都小于MICRO_KIND，则类型要使用MICRO_KIND作为kind的值，这样会节省内存。

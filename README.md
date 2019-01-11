@@ -1,6 +1,6 @@
 # utilsDemo
 
-已更新到1.1版本，添加依赖时请注意版本号：
+已更新到1.2版本，添加依赖时请注意版本号：
 
 ## 常用的工具类
     整理一些常用的工具类方便以后使用，将持续更新，欢迎 star，欢迎issues.
@@ -18,7 +18,8 @@
 2：添加依赖关系
     
     dependencies {
-	        implementation 'com.github.zhangshaopeng:utilsDemo:v1.0'
+            // 请查看releases,填写最新版本
+	        implementation 'com.github.zhangshaopeng:utilsDemo:+'
 	}
 ## 注意事项
 ### 1：权限问题

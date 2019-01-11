@@ -10,4 +10,6 @@ package com.shao.app.utils;
 interface Constants {
     String webHost = "";
     String host = "";
+    String TEMP_PATH = "utils/";
+    String TEMP_PHOTO_PATH = TEMP_PATH + "photo/";
 }

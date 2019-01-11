@@ -15,7 +15,7 @@ import com.shao.app.UtilManager;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class NetworkUtils {
+public class NetworkTool {
     /**
      * 未知网络
      */

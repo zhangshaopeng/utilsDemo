@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
  * Email :1377785991@qq.com
  * Data:2018/5/4
  */
-public class FormatUtil {
+public class FormatTool {
     /** 时间日期格式化到年月日时分秒. */
     public static final String dateFormatYMDHMS = "yyyy-MM-dd HH:mm:ss";
 

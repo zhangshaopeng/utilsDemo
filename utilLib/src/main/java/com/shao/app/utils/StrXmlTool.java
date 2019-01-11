@@ -11,7 +11,7 @@ import com.shao.app.UtilManager;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class StrXmlUtils {
+public class StrXmlTool {
     /**
      * @param resId
      * @return

@@ -9,7 +9,7 @@ import com.shao.app.UtilManager;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class DensityUtils {
+public class DensityTool {
     /**
      * 根据手机的分辨率从 dip 的单位 转成为 px(像素)
      * @param dpValue  dip

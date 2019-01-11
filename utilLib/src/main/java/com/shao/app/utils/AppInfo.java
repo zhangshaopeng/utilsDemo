@@ -165,7 +165,7 @@ public class AppInfo {
                     0);
             return info;
         } catch (PackageManager.NameNotFoundException e) {
-            ToastUtils.show("--->> 获取app版本信息失败");
+            ToastTool.show("--->> 获取app版本信息失败");
         }
         return null;
     }
@@ -337,7 +337,7 @@ public class AppInfo {
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean isAppRoot() {
-        ShellUtils.CommandResult result = ShellUtils.execCmd("echo root", true);
+        ShellTool.CommandResult result = ShellTool.execCmd("echo root", true);
         if (result.result == 0) {
             return true;
         }
@@ -357,6 +357,6 @@ public class AppInfo {
         if (TextUtils.isEmpty(packageName)) {
             return;
         }
-        activity.startActivityForResult(IntentUtils.getLaunchAppIntent(activity, packageName), requestCode);
+        activity.startActivityForResult(IntentTool.getLaunchAppIntent(activity, packageName), requestCode);
     }
 }

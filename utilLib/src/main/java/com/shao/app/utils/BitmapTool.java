@@ -46,7 +46,7 @@ import static com.shao.app.emoji.EmojiUtil.calculateInSampleSize;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class BitmapUtils {
+public class BitmapTool {
     /**
      * 把bitmap转换成String
      *
@@ -356,7 +356,7 @@ public class BitmapUtils {
                 }
             }
             File file = new File(dirPath, fileName);
-            boolean b = FileUtils.copyFile(imgFile, file);
+            boolean b = FileTool.copyFile(imgFile, file);
             if (b) {
                 Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                 Uri uri = Uri.fromFile(file);
@@ -382,6 +382,26 @@ public class BitmapUtils {
         bitmap.compress(format, 100, baos);
         return baos.toByteArray();
     }
+    /**
+     * 将bitmap存为字节
+     *
+     * @param character 品质 1-100
+     */
+    public static byte[] bitmap2Bytes(Bitmap bm, int character) {
+        if (bm != null) {
+            ByteArrayOutputStream bas = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.JPEG, character, bas);
+            byte[] byteArray = bas.toByteArray();
+            try {
+                bas.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return byteArray;
+        }
+        return null;
+    }
+
     /**
      * byteArr转bitmap
      *

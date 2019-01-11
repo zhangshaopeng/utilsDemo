@@ -15,14 +15,14 @@ import java.util.TimerTask;
  * Email :1377785991@qq.com
  * Data:2018/5/16
  */
-public class NetWorkSpeedUtils {
+public class NetWorkSpeedTool {
     private Context context;
     private Handler mHandler;
 
     private long lastTotalRxBytes = 0;
     private long lastTimeStamp = 0;
 
-    public NetWorkSpeedUtils(Context context, Handler mHandler){
+    public NetWorkSpeedTool(Context context, Handler mHandler){
         this.context = context;
         this.mHandler = mHandler;
     }

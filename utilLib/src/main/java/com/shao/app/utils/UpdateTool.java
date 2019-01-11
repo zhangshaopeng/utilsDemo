@@ -32,7 +32,7 @@ import java.net.URL;
  *
  * @author zsp
  */
-public class UpdateUtil {
+public class UpdateTool {
 
     private Context mContext;
     /**
@@ -74,7 +74,7 @@ public class UpdateUtil {
                     break;
                 case DOWN_ERROR:
                     downloadDialog.dismiss();
-                    ToastUtils.show("下载错误");
+                    ToastTool.show("下载错误");
                     break;
                 default:
                     break;
@@ -82,7 +82,7 @@ public class UpdateUtil {
         }
     };
 
-    public UpdateUtil(Context context) {
+    public UpdateTool(Context context) {
         this.mContext = context;
     }
 
@@ -97,7 +97,7 @@ public class UpdateUtil {
         if (!fileIsExists(saveFileName) || (fileIsExists(saveFileName) && !isUninatllApkInfo(saveFileName))) {
             apkUrl = url;
             if (TextUtils.isEmpty(apkUrl)) {
-                ToastUtils.show("下载路径错误，请重试");
+                ToastTool.show("下载路径错误，请重试");
                 return;
             }
             showNoticeDialog();

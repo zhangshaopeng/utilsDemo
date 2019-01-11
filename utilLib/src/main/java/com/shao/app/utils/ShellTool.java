@@ -15,7 +15,7 @@ import java.util.List;
  * Data:2018/12/5
  */
 
-public class ShellUtils {
+public class ShellTool {
 
     public static final String COMMAND_SU = "su";
     public static final String COMMAND_SH = "sh";

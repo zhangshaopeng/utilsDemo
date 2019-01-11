@@ -14,7 +14,7 @@ import android.view.WindowManager;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class ActivityUtils {
+public class ActivityTool {
     /**
      * 设置屏幕透明度
      * 可用于弹出popupWindow时使用，某些机型上可能无效

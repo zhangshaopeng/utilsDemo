@@ -8,7 +8,7 @@ import android.media.AudioManager;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class SpeakerUtils {
+public class SpeakerTool {
     /**
      * 扬声器开关
      * @param context

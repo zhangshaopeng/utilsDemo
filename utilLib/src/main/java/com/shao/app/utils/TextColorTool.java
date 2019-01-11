@@ -17,22 +17,22 @@ import java.util.regex.Pattern;
  * Email :1377785991@qq.com
  * Data:2018/5/3
  */
-public class TextColorUtils {
+public class TextColorTool {
     private static String priceRegex = "^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,2})?$";
 
-    private static TextColorUtils stringUtils;
+    private static TextColorTool stringUtils;
     private Context mContext;
 
-    private TextColorUtils() {
+    private TextColorTool() {
     }
 
-    private TextColorUtils(Context context) {
+    private TextColorTool(Context context) {
         this.mContext = context;
     }
 
-    public static TextColorUtils getStringUtils(Context context) {
+    public static TextColorTool getStringUtils(Context context) {
         if (stringUtils == null) {
-            stringUtils = new TextColorUtils(context);
+            stringUtils = new TextColorTool(context);
         }
         return stringUtils;
     }

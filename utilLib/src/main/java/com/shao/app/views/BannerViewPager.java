@@ -17,8 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.shao.app.utils.DensityUtils;
-import com.shao.app.utils.ImageUtils;
+import com.shao.app.utils.DensityTool;
+import com.shao.app.utils.ImageTool;
 import com.shao.app.utils.R;
 
 import java.util.ArrayList;
@@ -174,14 +174,14 @@ public class BannerViewPager extends RelativeLayout {
             if (picRealCount > 1) {// 如果不止一张图片，才显示圆点
                 ImageView point = new ImageView(context);// 小圆点
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        DensityUtils.dip2px(6), DensityUtils.dip2px(6));//小圆点直径为6dp
+                        DensityTool.dip2px(6), DensityTool.dip2px(6));//小圆点直径为6dp
                 point.setScaleType(ScaleType.CENTER_CROP);
                 point.setImageResource(R.drawable.select_point_bg);
                 if (i == 0) {
                     point.setEnabled(true);
                 } else {
                     // 每个圆点间隔5dp
-                    params.leftMargin = DensityUtils.dip2px(5);
+                    params.leftMargin = DensityTool.dip2px(5);
                     point.setEnabled(false);
                 }
                 ll_point.addView(point, params);
@@ -334,7 +334,7 @@ public class BannerViewPager extends RelativeLayout {
 
             ViewGroup.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             iv.setLayoutParams(params);
-            ImageUtils.load(urlList.get(realPosition), iv);
+            ImageTool.load(urlList.get(realPosition), iv);
             container.addView(iv);
             return iv;
         }
