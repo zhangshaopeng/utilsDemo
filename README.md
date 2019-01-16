@@ -16,10 +16,10 @@
 		}
 	}
 2：添加依赖关系
-    
+    // 请查看releases,填写最新版本,目前更新到v1.2
+    
     dependencies {
-            // 请查看releases,填写最新版本
-	        implementation 'com.github.zhangshaopeng:utilsDemo:+'
+	        implementation 'com.github.zhangshaopeng:utilsDemo:++'
 	}
 ## 注意事项
 ### 1：权限问题
