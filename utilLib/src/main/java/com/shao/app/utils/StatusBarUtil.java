@@ -29,7 +29,6 @@ import java.util.Set;
  * p>@Data:2019/5/31.
  */
 public class StatusBarUtil {
-
     public static void setStatusBar(Activity activity) {
         setStatusBar(activity, false, false);
     }
