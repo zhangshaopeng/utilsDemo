@@ -12,7 +12,6 @@ import android.content.Context;
 public class UtilManager {
     private static Context mContext;
     private static boolean isOpend = true;
-
     /**
      * 初始化工具类集合
      *

@@ -20,7 +20,6 @@ import java.util.List;
 public class Logger {
     private static boolean logEnabled = UtilManager.getIsLogger();
     private static String DEFAULT_TAG = "Logger";
-
     private static final int DEBUG = 1;
     private static final int ERROR = 2;
 

@@ -32,6 +32,7 @@ public class StatusBarUtil {
     public static void setStatusBar(Activity activity) {
         setStatusBar(activity, false, false);
     }
+
     public static void setStatusBar(Activity activity, boolean fitSystemWindows) {
         setStatusBar(activity, false, fitSystemWindows);
     }
