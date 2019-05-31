@@ -36,6 +36,7 @@ public class UtilManager {
         return mContext;
     }
 
+
     public static boolean getIsLogger() {
         return isOpend;
     }
