@@ -3,6 +3,8 @@ package com.shao.app.utils;
 import android.support.annotation.IntDef;
 import android.util.Log;
 
+import com.shao.app.UtilManager;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
  * Data:2018/5/3
  */
 public class Logger {
-    private static boolean logEnabled = true;
+    private static boolean logEnabled = UtilManager.getIsLogger();
     private static String DEFAULT_TAG = "Logger";
 
     private static final int DEBUG = 1;
